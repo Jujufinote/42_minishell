@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 15:45:12 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/13 15:00:17 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/13 17:06:33 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,15 +106,30 @@ void	exec_builtin(t_data *data, t_token *token, int info)
 	&& ft_strncmp(token->str, "exit", ft_strlen(token->str)) == 0)
 		exit_status = ft_exit(data, token->next);
 	else if (ft_strncmp(token->str, "cd", ft_strlen(token->str)) == 0)
+	{
+		free_data(data);
 		exit(EXIT_SUCCESS);
+	}
 	else if (ft_strncmp(token->str, "export", ft_strlen(token->str)) == 0)
+	{
+		free_data(data);
 		exit(EXIT_SUCCESS);
+	}
 	else if (ft_strncmp(token->str, "unset", ft_strlen(token->str)) == 0)
+	{
+		free_data(data);
 		exit(EXIT_SUCCESS);
+	}
 	if (exit_status == 1)
+	{
+		free_data(data);
 		exit(EXIT_FAILURE);
+	}
 	if (exit_status == 0)
+	{
+		free_data(data);
 		exit(EXIT_SUCCESS);
+	}
 	return ;
 }
 
