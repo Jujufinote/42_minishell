@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 22:55:53 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/13 14:05:48 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:44:30 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ int	is_builtin(char *str)
 	return (0);
 }
 
-int	too_many_arg(t_token *token)
+int	too_many_arg(t_token *token, char *cmd)
 {
 	t_token	*temp;
 
-	if (token != NULL)
+	if (token != NULL && ft_strncmp(token->str, "|", 2) != 0)
 	{
 		temp = token->next;
 		while (temp != NULL && ft_strncmp(temp->str, "|", 2) != 0)
@@ -84,7 +84,10 @@ int	too_many_arg(t_token *token)
 			if (is_redirection(temp->str) == 1)
 				temp = temp->next;
 			else if (temp->file == 1)
-				return (ft_putstr_fd("exit : too many arguments\n", 2), 1);
+			{
+				ft_putstr_fd(cmd, 2);
+				return (ft_putstr_fd(" : too many arguments\n", 2), 1);
+			}
 			temp = temp->next;
 		}
 	}

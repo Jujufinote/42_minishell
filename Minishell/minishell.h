@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:22:55 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/13 14:03:29 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:34:16 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,8 +155,7 @@ int		is_pipe_ok(t_token *token);
 void	execution(t_data *data);
 void	exec_pipe(t_data *data, t_token *token, char *result, int i);
 void	simple_exec(t_data *data, t_token *token);
-void	exec_builtin(t_data *data, t_token *token, int info);
-void	exec_builtin_base(t_data *data, t_token *token);
+void	exec_builtin(t_data *data, t_token *token, int info, int exit_status);
 
 /*execution_utils.c*/
 void	ft_execute(char **cmdoption, char **paths, char **env);
@@ -193,7 +192,7 @@ int		printf_sorted(t_data *data);
 int		is_valid_opt_echo(char *str);
 int		update_pwd(t_data *data);
 int		is_builtin(char *str);
-int		too_many_arg(t_token *token);
+int		too_many_arg(t_token *token, char *cmd);
 
 /*get.c*/
 char	*getname(char *str);

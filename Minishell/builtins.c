@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:41:32 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/13 12:48:57 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:41:19 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	cd(t_data *data, t_token *token, char *home)
 	char	*path;
 	int		res;
 
-	if (too_many_arg(token) == 1)
+	if (too_many_arg(token, token->before->str) == 1)
 		return (1);
 	res = cd_shortcuts(data, token, home);
 	if (res == 1)
@@ -106,14 +106,16 @@ int	ft_exit(t_data *data, t_token *token)
 {
 	int		status;
 
-	ft_putstr_fd("exit\n", data->files->saved_out);
+	printf("exit\n");
 	rl_clear_history();
 	status = EXIT_SUCCESS;
-	if (token != NULL && is_all_num(token->str) == 1)
+	if (token != NULL && ft_strncmp(token->str, "|", 2) != 0 \
+	&& is_all_num(token->str) == 1)
 		status = ft_atoi(token->str);
-	if (token != NULL && is_all_num(token->str) == 0)
+	if (token != NULL && ft_strncmp(token->str, "|", 2) != 0 \
+	&& is_all_num(token->str) == 0)
 		ft_putstr_fd("exit : numeric argument required\n", 2);
-	else if (too_many_arg(token) == 1)
+	else if (too_many_arg(token, token->before->str) == 1)
 		return (1);
 	free_data(data);
 	exit(status);
