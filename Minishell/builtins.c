@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:41:32 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/14 15:41:19 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/15 12:45:07 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	ft_exit(t_data *data, t_token *token)
 	if (token != NULL && ft_strncmp(token->str, "|", 2) != 0 \
 	&& is_all_num(token->str) == 0)
 		ft_putstr_fd("exit : numeric argument required\n", 2);
-	else if (too_many_arg(token, token->before->str) == 1)
+	else if (token != NULL && too_many_arg(token, token->before->str) == 1)
 		return (1);
 	free_data(data);
 	exit(status);
