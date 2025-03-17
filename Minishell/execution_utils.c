@@ -6,34 +6,39 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 22:54:56 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/12 23:55:14 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/17 16:04:08 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_execute(char **cmdoption, char **envp, char **env)
+void	ft_execute(t_data *data, char **cmdoption)
 {
 	char	*path;
 
 	if (cmdoption == NULL)
 	{
 		perror("Error separation command-option ");
+		free_data(data);
 		exit(EXIT_FAILURE);
 	}
 	if (cmdoption[0] == NULL)
+	{
+		free_data(data);
 		exit(EXIT_SUCCESS);
-	path = ft_access(envp, cmdoption[0]);
+	}
+	path = ft_access(data->env, cmdoption[0]);
 	if (path == NULL)
 	{
 		free_dtab(cmdoption);
+		free_data(data);
 		exit(errno);
 	}
-	if (execve(path, cmdoption, env) == -1)
+	if (execve(path, cmdoption, data->env) == -1)
 	{
 		perror("Error executing ");
-		free(path);
 		free_dtab(cmdoption);
+		free_data(data);
 		exit(errno);
 	}
 	return ;

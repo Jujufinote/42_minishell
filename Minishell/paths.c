@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:40:46 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/13 12:20:41 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/17 16:37:33 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,18 @@ char	**make_paths(char **envp)
 	return (paths);
 }
 
+int		ft_is_file(char *path)
+{
+	struct stat st;
+
+	if (stat(path, &st) == 0)
+	{
+		if (S_ISREG(st.st_mode))
+			return (0);
+	}
+	return (1);
+}
+
 char	*ft_access(char **envp, char *cmd)
 {
 	char	**paths;
@@ -45,11 +57,11 @@ char	*ft_access(char **envp, char *cmd)
 
 	if (cmd == NULL)
 		return (NULL);
-	if (*cmd != '\0' && access(cmd, F_OK | X_OK) == 0)
+	if (*cmd != '\0' && ft_is_file(cmd) == 0 && access(cmd, F_OK | X_OK) == 0)
 		return (cmd);
 	paths = make_paths(envp);
 	path = verif_path(paths, cmd);
-	free(paths);
+	free_dtab(paths);
 	if (path != NULL)
 		return (path);
 	ft_putstr_fd(cmd, 2);
@@ -73,7 +85,7 @@ char	*verif_path(char **paths, char *cmd)
 		free(path);
 		if (path2 == NULL)
 			return (perror("Error in memory allocation "), NULL);
-		if (access(path2, F_OK | X_OK) == 0)
+		if (ft_is_file(path2) == 0 && access(path2, F_OK | X_OK) == 0)
 			return (path2);
 		free(path2);
 		i++;

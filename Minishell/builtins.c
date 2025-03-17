@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:41:32 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/15 12:45:07 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/17 16:31:08 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	cd(t_data *data, t_token *token, char *home)
 				return (ft_putstr_fd("Error in memory allocation\n", 2), 1);
 		}
 		if (chdir(path) != 0)
-			return (free(path), perror("cd"), 1);
+			return (free(path), perror("cd "), 1);
 		free(path);
 	}
 	if (update_pwd(data) == 1)
@@ -85,7 +85,7 @@ int	cd_shortcuts(t_data *data, t_token *token, char *home)
 		if (home == NULL)
 			return (printf("cd : HOME not set\n"), 1);
 		if (chdir(home) != 0)
-			return (perror("cd"), 1);
+			return (perror("cd "), 1);
 		return (2);
 	}
 	else if (ft_strncmp(token->str, "-", 2) == 0)

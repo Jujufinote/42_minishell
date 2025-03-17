@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:22:55 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/14 15:34:16 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/17 16:36:11 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@
 
 # include <sys/wait.h>
 // wait, waitpid
+
+# include <sys/stat.h>
+// stat
 
 # include <signal.h>
 // signal
@@ -112,6 +115,7 @@ int		modif_env(t_data *data, char *str);
 
 /*paths.c*/
 char	**make_paths(char **envp);
+int		ft_is_file(char *path);
 char	*ft_access(char **paths, char *cmd);
 char	*verif_path(char **paths, char *cmd);
 
@@ -156,9 +160,10 @@ void	execution(t_data *data);
 void	exec_pipe(t_data *data, t_token *token, char *result, int i);
 void	simple_exec(t_data *data, t_token *token);
 void	exec_builtin(t_data *data, t_token *token, int info, int exit_status);
+void	exec_builtin_base(t_data *data, t_token *token);
 
 /*execution_utils.c*/
-void	ft_execute(char **cmdoption, char **paths, char **env);
+void	ft_execute(t_data *data, char **cmdoption);
 void	ft_wait(t_data *data, int i);
 
 /*here_doc.c*/
