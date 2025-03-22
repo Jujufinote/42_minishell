@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 11:39:01 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/13 13:53:32 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/21 14:23:10 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	is_hd_alone(char *str)
 
 void	next_hd(t_data *data, t_token *token)
 {
-	while (token != NULL && ft_strncmp(token->str, "|", 2))
+	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
 	{
 		if (is_redirection(token->str) == 1)
 		{

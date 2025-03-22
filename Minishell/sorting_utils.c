@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 12:25:11 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/12 21:55:59 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/20 17:33:42 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	is_operator(char *str)
 
 int	is_file(t_token *token)
 {
-	if (is_operator(token->str) == 0)
+	if (is_operator(token->post_str) == 0)
 		return (1);
 	return (0);
 }
@@ -44,7 +44,7 @@ void	sorting(t_token *token)
 {
 	while (token != NULL)
 	{
-		token->op = is_operator(token->str);
+		token->op = is_operator(token->post_str);
 		token->file = is_file(token);
 		token = token->next;
 	}

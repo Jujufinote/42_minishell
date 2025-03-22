@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:22:55 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/17 16:36:11 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/21 16:37:33 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct s_hd
 typedef struct s_token
 {
 	char			*base;
+	char			*post_str;
 	char			*str;
 	int				op;
 	int				file;
@@ -123,7 +124,6 @@ char	*verif_path(char **paths, char *cmd);
 int		parsing(char *input);
 int		is_close(char *input, char c);
 int		is_all_wp(char *str);
-int		is_format(char c);
 
 /*characters.c*/
 int		is_name_var(char c);

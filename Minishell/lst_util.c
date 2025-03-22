@@ -6,23 +6,24 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 16:27:08 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/13 11:53:22 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/20 17:32:35 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*lstnew(char *base, char *str)
+t_token	*lstnew(char *base, char *post_str)
 {
 	t_token	*token;
 
-	if (str == NULL)
+	if (post_str == NULL)
 		return (NULL);
 	token = malloc(sizeof(t_token));
 	if (token == NULL)
 		return (NULL);
 	token->base = base;
-	token->str = str;
+	token->post_str = post_str;
+	token->str = NULL;
 	token->op = 0;
 	token->file = 0;
 	token->next = NULL;
@@ -73,6 +74,7 @@ void	lstdel(t_token **lst)
 	{
 		before = temp;
 		free(temp->base);
+		free(temp->post_str);
 		free(temp->str);
 		temp = temp->next;
 		before->next = NULL;
@@ -83,7 +85,7 @@ void	lstdel(t_token **lst)
 	return ;
 }
 
-/*void	printlst(t_token **p_token)
+void	printlst(t_token **p_token)
 {
 	t_token	*token;
 
@@ -93,10 +95,9 @@ void	lstdel(t_token **lst)
 	printf("\n");
 	while (token != NULL)
 	{
-		printf("before : %p\nnow : %p\nbase : %s\nstr : %s\nop = %d\n
-		file = %d\nnext : %p\nnow : %p\n\n", token->before, token, token->base, 
-		token->str, token->op, token->file, token->next, token);
+		printf("before : %p\nnow : %p\nbase : %s\npost_str : %s\nstr : %s\nop = %d\nfile = %d\nnext : %p\nnow : %p\n\n", token->before, token, token->base, 
+		token->post_str, token->str, token->op, token->file, token->next, token);
 		token = token->next;
 	}
 	return ;
-}*/
+}

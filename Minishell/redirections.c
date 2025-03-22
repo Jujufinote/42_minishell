@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 18:36:52 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/13 12:03:53 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/21 14:36:24 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	redirection(t_data *data, t_token *token, int i)
 	if (data->pipe->nb_pipe > 0)
 	{
 		if (redir_base(data, i) == 1)
-			return (1);
+			return (free_data(data), 1);
 	}
-	while (token != NULL && ft_strncmp(token->str, "|", 2))
+	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
 	{
 		if (is_redirection(token->str) == 1)
 		{
@@ -28,7 +28,7 @@ int	redirection(t_data *data, t_token *token, int i)
 			|| redir_hd(data, token, i) == 1 \
 			|| redir_out(data, token, i) == 1 \
 			|| redir_append(data, token, i) == 1)
-				return (1);
+				return (free_data(data), 1);
 		}
 		token = token->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:47:15 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/13 13:37:27 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/22 14:51:43 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	export(t_data *data, t_token *token)
 		name = getname(token->str);
 		if (ft_strchr(token->str, '=') != NULL && ft_getenv(name, data) != NULL)
 			exit_status = modif_env(data, token->str);
-		else if (ft_strchr(token->str, '=') != NULL)
+		else
 			exit_status = add_env(data, token->str);
 		token = token->next;
 		free(name);
@@ -35,16 +35,37 @@ int	export(t_data *data, t_token *token)
 
 int	unset(t_data *data, t_token *token)
 {
-	int		exit_status;
+	int		i;
+	char	*var;
 
-	exit_status = 0;
 	while (token != NULL && token->file == 1)
 	{
-		if (ft_getenv(token->str, data) != NULL)
-			exit_status = supp_env(data, ft_strjoin(token->str, "="), 0, 0);
+		i = 0;
+		var = ft_strjoin(token->str, "=");
+		while (data->env[i] != NULL)
+		{
+			if (ft_strnstr(data->env[i], var, ft_strlen(var)) != NULL)
+			{
+				if (supp_env(data, var, 0, 0) == 1)
+					return (1);
+				else
+					break ;
+			}
+			else if (ft_strnstr(data->env[i], token->str, ft_strlen(token->str)) != NULL)
+			{
+				if (supp_env(data, ft_strdup(token->str), 0, 0) == 1)
+					return (free(var), 1);
+				else
+				{
+					free(var);
+					break ;
+				}
+			}
+			++i;
+		}
 		token = token->next;
 	}
-	return (exit_status);
+	return (0);
 }
 
 int	env(char **env, t_token *token)

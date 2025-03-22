@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:08:35 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/13 13:35:03 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/20 18:38:05 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	count_pipe(t_token *token)
 	pipe = 0;
 	while (token != NULL)
 	{
-		if (token->op == 1 && ft_strncmp(token->str, "|", 2) == 0)
+		if (token->op == 1 && ft_strncmp(token->post_str, "|", 2) == 0)
 			++pipe;
 		token = token->next;
 	}
@@ -68,10 +68,10 @@ int	count_pipe(t_token *token)
 void	syntax_error(t_token *token)
 {
 	printf("Syntax error near unexpected token : ");
-	if (token->str[0] == '|' && token->op == 1)
-		printf("\'%s\'\n", token->str);
+	if (token->post_str[0] == '|' && token->op == 1)
+		printf("\'%s\'\n", token->post_str);
 	else if (token->next != NULL)
-		printf("\'%s\'\n", token->next->str);
+		printf("\'%s\'\n", token->next->post_str);
 	else
 		printf("\'newline\'\n");
 	return ;
@@ -84,7 +84,7 @@ int	count_hd(t_token *token)
 	hd = 0;
 	while (token != NULL)
 	{
-		if (token->op == 2 && ft_strncmp(token->str, "<<", 3) == 0)
+		if (token->op == 2 && ft_strncmp(token->post_str, "<<", 3) == 0)
 			++hd;
 		token = token->next;
 	}

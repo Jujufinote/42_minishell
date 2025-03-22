@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 14:41:45 by jverdier          #+#    #+#             */
-/*   Updated: 2024/03/01 11:28:00 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:50:46 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	unsigned char	*str2;
 
 	i = 0;
+	if (s1 == NULL || s2 == NULL)
+		return (-1);
 	str1 = (unsigned char *)s1;
 	str2 = (unsigned char *)s2;
 	if (n == 0)

@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:41:32 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/17 16:31:08 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/21 16:29:29 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,14 @@ int	cd(t_data *data, t_token *token, char *home)
 	char	*path;
 	int		res;
 
-	if (too_many_arg(token, token->before->str) == 1)
+	if (token != NULL && too_many_arg(token, token->before->post_str) == 1)
 		return (1);
 	res = cd_shortcuts(data, token, home);
 	if (res == 1)
 		return (1);
 	else if (res == 0)
 	{
-		path = strdup(token->str);
-		if (ft_strncmp(token->str, "~/", 2) == 0)
-		{
-			free(path);
-			path = ft_strjoin(home, &token->str[1]);
-			if (path == NULL)
-				return (ft_putstr_fd("Error in memory allocation\n", 2), 1);
-		}
+		path = ft_strdup(token->str);
 		if (chdir(path) != 0)
 			return (free(path), perror("cd "), 1);
 		free(path);
@@ -80,7 +73,7 @@ int	cd_shortcuts(t_data *data, t_token *token, char *home)
 	char	*path;
 
 	if (token == NULL || token->file != 1 \
-	|| ft_strncmp(token->str, "~", 2) == 0)
+	|| ft_strncmp(token->post_str, "$HOME", 6) == 0)
 	{
 		if (home == NULL)
 			return (printf("cd : HOME not set\n"), 1);
@@ -106,15 +99,19 @@ int	ft_exit(t_data *data, t_token *token)
 {
 	int		status;
 
-	printf("exit\n");
+	if (data->pipe->nb_pipe == 0)
+		ft_putstr_fd("exit\n", data->files->saved_out);
 	rl_clear_history();
 	status = EXIT_SUCCESS;
-	if (token != NULL && ft_strncmp(token->str, "|", 2) != 0 \
+	if (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0 \
 	&& is_all_num(token->str) == 1)
 		status = ft_atoi(token->str);
-	if (token != NULL && ft_strncmp(token->str, "|", 2) != 0 \
+	if (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0 \
 	&& is_all_num(token->str) == 0)
+	{
+		status = 2;
 		ft_putstr_fd("exit : numeric argument required\n", 2);
+	}
 	else if (token != NULL && too_many_arg(token, token->before->str) == 1)
 		return (1);
 	free_data(data);

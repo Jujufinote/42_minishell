@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 15:45:12 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/17 15:30:27 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/21 16:09:38 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	execution(t_data *data)
 {
 	t_token	*token;
 
-	signal(SIGINT, handler);
+*	signal(SIGINT, handler);
 	token = *data->tokens;
 	data->pipe->nb_pipe = count_pipe(token);
 	if (prep_hd(data) == 1)
@@ -56,10 +56,9 @@ void	exec_pipe(t_data *data, t_token *token, char *result, int i)
 			else
 				ft_execute(data, build_command_tab(token));
 		}
-		exec_builtin_base(data, token);
 		next_hd(data, token);
 		token = token->next;
-		while (token != NULL && ft_strncmp(token->before->str, "|", 2) != 0)
+		while (token != NULL && ft_strncmp(token->before->post_str, "|", 2) != 0)
 			token = token->next;
 	}
 	close_all(data->pipe->pipefd, data->pipe->nb_pipe);
@@ -85,9 +84,8 @@ void	simple_exec(t_data *data, t_token *token)
 			ft_execute(data, build_command_tab(token));
 	}
 	ft_wait(data, -2);
-	exec_builtin_base(data, token);
-	if (ft_strncmp(token->str, "exit", ft_strlen("exit")) == 0)
-		data->last_exit_status = ft_exit(data, token->next);
+	if (data->last_exit_status != 1)
+		exec_builtin_base(data, token);
 	return ;
 }
 
@@ -127,5 +125,7 @@ void	exec_builtin_base(t_data *data, t_token *token)
 		data->last_exit_status = export(data, token->next);
 	else if (ft_strncmp(token->str, "unset", ft_strlen(token->str)) == 0)
 		data->last_exit_status = unset(data, token->next);
+	else if (ft_strncmp(token->str, "exit", ft_strlen("exit")) == 0)
+		data->last_exit_status = ft_exit(data, token->next);
 	return ;
 }

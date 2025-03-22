@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:40:46 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/17 16:37:33 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/20 18:31:05 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,17 @@ char	*ft_access(char **envp, char *cmd)
 
 	if (cmd == NULL)
 		return (NULL);
-	if (*cmd != '\0' && ft_is_file(cmd) == 0 && access(cmd, F_OK | X_OK) == 0)
-		return (cmd);
+	if (*cmd != '\0' && ft_is_file(cmd) == 0 && access(cmd, F_OK) == 0)
+	{
+		if (access(cmd, X_OK) == 0)
+			return (cmd);
+		ft_putstr_fd(cmd, 2);
+		return (ft_putstr_fd(" : Permission denied\n", 2), NULL);
+	}
 	paths = make_paths(envp);
 	path = verif_path(paths, cmd);
 	free_dtab(paths);
-	if (path != NULL)
-		return (path);
-	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd(" : Command not found\n", 2);
-	return (NULL);
+	return (path);
 }
 
 char	*verif_path(char **paths, char *cmd)
@@ -75,8 +76,8 @@ char	*verif_path(char **paths, char *cmd)
 	char	*path;
 	char	*path2;
 
-	i = 0;
-	while (paths != NULL && *cmd != '\0' && paths[i] != NULL)
+	i = -1;
+	while (paths != NULL && *cmd != '\0' && paths[++i] != NULL)
 	{
 		path = ft_strjoin(paths[i], "/");
 		if (path == NULL)
@@ -85,10 +86,15 @@ char	*verif_path(char **paths, char *cmd)
 		free(path);
 		if (path2 == NULL)
 			return (perror("Error in memory allocation "), NULL);
-		if (ft_is_file(path2) == 0 && access(path2, F_OK | X_OK) == 0)
-			return (path2);
+		if (ft_is_file(path2) == 0 && access(path2, F_OK) == 0)
+		{
+			if (access(path2, X_OK) == 0)
+				return (path2);
+			ft_putstr_fd(cmd, 2);
+			return (ft_putstr_fd(" : Permission denied\n", 2), free(path2), NULL);
+		}
 		free(path2);
-		i++;
 	}
-	return (NULL);
+	ft_putstr_fd(cmd, 2);
+	return (ft_putstr_fd(" : Command not found\n", 2), NULL);
 }

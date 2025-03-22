@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:05:54 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/13 11:48:36 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/22 14:42:56 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ char	*grab_var(char *base, t_data *data)
 	char	*name;
 	char	*var;
 
-	if (ft_strncmp(base, "~", ft_strlen("~")) == 0)
-		return (ft_getenv("HOME", data));
 	base = base + 1;
 	if (ft_strncmp(base, "?", ft_strlen("?")) == 0)
 		return (get_last_exit_status(data->last_exit_status));

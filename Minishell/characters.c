@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 13:59:20 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/14 15:38:31 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/21 16:18:22 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	is_all_num(char *str)
 	if (str == NULL)
 		return (0);
 	i = 0;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
 	while (str[i] != '\0')
 	{
 		if (ft_isdigit(str[i]) == 0)
