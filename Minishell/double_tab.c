@@ -6,31 +6,11 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:01:19 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/21 14:24:24 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/24 18:32:22 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_tab(char **table)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (table[i] != NULL)
-	{
-		j = 0;
-		while (table[i][j] != '\0')
-		{
-			write(1, &table[i][j], 1);
-			++j;
-		}
-		write(1, "\n", 1);
-		++i;
-	}
-	return ;
-}
 
 int	find_len(t_token *token)
 {
@@ -101,7 +81,7 @@ void	bubble_sort_tab(char **sorted)
 		temp = i;
 		while (sorted[j] != NULL)
 		{
-			if (ft_strncmp(sorted[temp], sorted[j], ft_strlen(sorted[i])) > 0)
+			if (ft_strncmp(sorted[temp], sorted[j], ft_strlen(sorted[temp]) + 1) > 0)
 				temp = j;
 			++j;
 		}

@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:47:15 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/24 17:34:20 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/24 18:43:52 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,21 +91,46 @@ int	env(char **env, t_token *token)
 int	printf_sorted(t_data *data)
 {
 	int		i;
+	int		j;
 	char	**sorted;
 
 	sorted = create_env(data->env);
 	if (sorted == NULL)
 	{
-		ft_putstr_fd("Error in memory allocation\n", data->files->saved_out);
+		ft_putstr_fd("Error in memory allocation\n", 2);
 		return (1);
 	}
 	bubble_sort_tab(sorted);
 	i = 0;
 	while (sorted[i] != NULL)
 	{
-		printf("declare -x %s\n", sorted[i]);
+		printf("declare -x ");
+		j = 0;
+		while (sorted[i][j] != 0 && sorted[i][j] != '=')
+		{
+			printf("%c", sorted[i][j]);
+			++j;
+		}
+		if (sorted[i][j] == '=')
+			printf("%c\"%s\"\n", sorted[i][j], &sorted[i][j + 1]);
+		else
+			printf("\n");
 		++i;
 	}
 	free_dtab(sorted);
 	return (0);
+}
+
+void	print_tab(char **table)
+{
+	int	i;
+
+	i = 0;
+	while (table[i] != NULL)
+	{
+		if (ft_strchr(table[i], '=') != NULL)
+			printf("%s\n", table[i]);
+		++i;
+	}
+	return ;
 }

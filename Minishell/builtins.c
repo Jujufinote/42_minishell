@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:41:32 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/24 17:57:26 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/24 18:17:50 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	cd(t_data *data, t_token *token, char *home)
 	while (token != NULL && ft_strncmp(token->str, "|", 2) != 0)
 	{
 		if (is_redirection(token->str) == 1)
-			token->next->next;
+			token = token->next->next;
 		res = cd_shortcuts(data, token, home);
 		if (res == 1)
 			return (1);

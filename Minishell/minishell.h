@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:22:55 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/24 16:12:59 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/24 18:08:12 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,7 @@ int		export(t_data *data, t_token *token);
 int		unset(t_data *data, t_token *token);
 int		env(char **env, t_token *token);
 int		printf_sorted(t_data *data);
+void	print_tab(char **table);
 
 /*builtins_utils.c*/
 int		is_valid_opt_echo(char *str);
@@ -223,7 +224,6 @@ void	syntax_error(t_token *token);
 int		count_hd(t_token *token);
 
 /*double_tab.c*/
-void	print_tab(char **table);
 int		find_len(t_token *token);
 char	**build_command_tab(t_token *token);
 void	swap_pchar(char **p1, char **p2);
