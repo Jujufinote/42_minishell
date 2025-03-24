@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:22:55 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/21 16:37:33 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:12:59 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,9 @@ int		main(int argc, char **argv, char **envp);
 /*env.c*/
 char	**create_env(char **envp);
 int		add_env(t_data *data, char *var);
-char	**env_alloc(char **env);
 int		supp_env(t_data *data, char *var, int i, int j);
 int		modif_env(t_data *data, char *str);
+int		is_env(char **env, char *str);
 
 /*paths.c*/
 char	**make_paths(char **envp);
@@ -123,14 +123,17 @@ char	*verif_path(char **paths, char *cmd);
 /*parsing.c*/
 int		parsing(char *input);
 int		is_close(char *input, char c);
-int		is_all_wp(char *str);
 
 /*characters.c*/
 int		is_name_var(char c);
 int		is_whitespace(char c);
 int		is_redirection(char *str);
 int		is_pairs(char c);
+
+/*is_all.c*/
+int		is_all_wp(char *str);
 int		is_all_num(char *str);
+int		is_all_name_var(char *str);
 
 /*tokenisation.c*/
 char	*howsub(char *s, int i);
@@ -203,7 +206,6 @@ int		too_many_arg(t_token *token, char *cmd);
 char	*getname(char *str);
 char	*ft_getenv(char	*name, t_data *data);
 char	*grab_var(char *base, t_data *data);
-int		prep_tab(char *array, int num);
 char	*get_last_exit_status(int num);
 
 /*lst_util.c*/
@@ -230,14 +232,18 @@ void	bubble_sort_tab(char **sorted);
 /*init.c*/
 int		init(t_data *data, char **envp);
 int		init_structs(t_data *data);
-int		*pid_alloc(int nb_commands);
-int		**pipefd_alloc(int nb_pipes);
 int		**make_pipefds(int **pipefd, int nb_pipes);
 
 /*preps.c*/
 void	prep_exec(t_data *data, char *input);
 int		prep_pipe(t_data *data);
 int		prep_hd(t_data *data);
+int		prep_tab(char *array, int num);
+
+/*mallocs.c*/
+char	**env_alloc(char **env);
+int		*pid_alloc(int nb_commands);
+int		**pipefd_alloc(int nb_pipes);
 
 /*close_and_free.c*/
 void	close_unused_fd(int **pipefd, int nb_pipes, int i);

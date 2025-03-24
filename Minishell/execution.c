@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 15:45:12 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/21 16:09:38 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:59:06 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,19 +91,19 @@ void	simple_exec(t_data *data, t_token *token)
 
 void	exec_builtin(t_data *data, t_token *token, int info, int exit_status)
 {
-	if (ft_strncmp(token->str, "echo", ft_strlen(token->str)) == 0)
+	if (ft_strncmp(token->str, "echo", ft_strlen("echo") + 1) == 0)
 		exit_status = ft_echo(token->next);
-	else if (ft_strncmp(token->str, "pwd", ft_strlen(token->str)) == 0)
+	else if (ft_strncmp(token->str, "pwd", ft_strlen("pwd") + 1) == 0)
 		exit_status = pwd();
-	else if (ft_strncmp(token->str, "env", ft_strlen(token->str)) == 0)
+	else if (ft_strncmp(token->str, "env", ft_strlen("env") + 1) == 0)
 		exit_status = env(data->env, token->next);
-	else if (info == 1 && ft_strncmp(token->str, "exit", ft_strlen(token->str)) == 0)
+	else if (info == 1 && ft_strncmp(token->str, "exit", ft_strlen("exit") + 1) == 0)
 		exit_status = ft_exit(data, token->next);
-	else if (info == 1 && ft_strncmp(token->str, "cd", ft_strlen(token->str)) == 0)
+	else if (info == 1 && ft_strncmp(token->str, "cd", ft_strlen("cd") + 1) == 0)
 		exit_status = cd(data, token->next, ft_getenv("HOME", data));
-	else if (info == 1 && ft_strncmp(token->str, "export", ft_strlen(token->str)) == 0)
+	else if (info == 1 && ft_strncmp(token->str, "export", ft_strlen("export") + 1) == 0)
 		exit_status = export(data, token->next);
-	else if (info == 1 && ft_strncmp(token->str, "unset", ft_strlen(token->str)) == 0)
+	else if (info == 1 && ft_strncmp(token->str, "unset", ft_strlen("unset") + 1) == 0)
 		exit_status = unset(data, token->next);
 	if (exit_status == 1)
 	{
@@ -119,13 +119,13 @@ void	exec_builtin(t_data *data, t_token *token, int info, int exit_status)
 
 void	exec_builtin_base(t_data *data, t_token *token)
 {
-	if (ft_strncmp(token->str, "cd", ft_strlen(token->str)) == 0)
+	if (ft_strncmp(token->str, "cd", ft_strlen("cd") + 1) == 0)
 		data->last_exit_status = cd(data, token->next, ft_getenv("HOME", data));
-	else if (ft_strncmp(token->str, "export", ft_strlen(token->str)) == 0)
+	else if (ft_strncmp(token->str, "export", ft_strlen("export") + 1) == 0)
 		data->last_exit_status = export(data, token->next);
-	else if (ft_strncmp(token->str, "unset", ft_strlen(token->str)) == 0)
+	else if (ft_strncmp(token->str, "unset", ft_strlen("unset") + 1) == 0)
 		data->last_exit_status = unset(data, token->next);
-	else if (ft_strncmp(token->str, "exit", ft_strlen("exit")) == 0)
+	else if (ft_strncmp(token->str, "exit", ft_strlen("exit") + 1) == 0)
 		data->last_exit_status = ft_exit(data, token->next);
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:05:54 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/22 14:42:56 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/23 15:16:54 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,25 +71,6 @@ char	*grab_var(char *base, t_data *data)
 	if (var == NULL)
 		return ("");
 	return (var);
-}
-
-int	prep_tab(char *array, int temp)
-{
-	int	i;
-
-	i = 0;
-	while (temp != 0 && temp > 0)
-	{
-		temp /= 10;
-		++i;
-	}
-	temp = i;
-	while (i < 4)
-	{
-		array[i] = '\0';
-		++i;
-	}
-	return (temp);
 }
 
 char	*get_last_exit_status(int num)

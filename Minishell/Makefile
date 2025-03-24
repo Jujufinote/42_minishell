@@ -13,6 +13,7 @@ SRC = ./minishell.c \
 		./paths.c \
 		./parsing.c \
 		./characters.c \
+		./is_all.c \
 		./tokenisation.c \
 		./concatenation.c \
 		./sorting_utils.c \
@@ -30,6 +31,7 @@ SRC = ./minishell.c \
 		./double_tab.c \
 		./init.c \
 		./preps.c \
+		./mallocs.c \
 		./close_and_free.c
 
 OBJ = ${SRC:.c=.o}

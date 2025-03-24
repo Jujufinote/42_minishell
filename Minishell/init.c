@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 13:46:30 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/13 13:40:31 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/23 15:14:33 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,29 +56,6 @@ int	init_structs(t_data *data)
 		return (ft_putstr_fd("Error in memory allocation\n", 2), 1);
 	}
 	return (0);
-}
-
-int	*pid_alloc(int nb_commands)
-{
-	int	*pid;
-
-	pid = malloc(sizeof(pid_t) * nb_commands);
-	if (!pid)
-		return (NULL);
-	return (pid);
-}
-
-int	**pipefd_alloc(int nb_pipes)
-{
-	int	**pipefd;
-
-	pipefd = (int **)malloc(sizeof(int *) * nb_pipes);
-	if (!pipefd)
-		return (NULL);
-	pipefd = make_pipefds(pipefd, nb_pipes);
-	if (pipefd == NULL)
-		return (NULL);
-	return (pipefd);
 }
 
 int	**make_pipefds(int **pipefd, int nb_pipes)

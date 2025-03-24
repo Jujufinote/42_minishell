@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:43:03 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/13 13:45:00 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/23 15:17:02 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,23 @@ int	prep_hd(t_data *data)
 		token = token->next;
 	}
 	return (0);
+}
+
+int	prep_tab(char *array, int temp)
+{
+	int	i;
+
+	i = 0;
+	while (temp != 0 && temp > 0)
+	{
+		temp /= 10;
+		++i;
+	}
+	temp = i;
+	while (i < 4)
+	{
+		array[i] = '\0';
+		++i;
+	}
+	return (temp);
 }

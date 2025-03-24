@@ -1,48 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   is_all.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 12:01:30 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/23 15:20:35 by jverdier         ###   ########.fr       */
+/*   Created: 2025/03/23 15:19:47 by jverdier          #+#    #+#             */
+/*   Updated: 2025/03/24 15:16:37 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	parsing(char *input)
+int	is_all_wp(char *str)
 {
 	int	i;
 
 	i = 0;
-	if (is_all_wp(input) == 1)
-		return (1);
-	while (input[i] != '\0')
-	{
-		if (is_pairs(input[i]) == 1)
-		{
-			if (is_close(&input[i + 1], input[i]) == 0)
-			{
-				printf("Syntax error : unclosed caracter\n");
-				return (1);
-			}
-			i += length(&input[i + 1], input[i]) + 1;
-		}
+	while (str[i] != 0 && is_whitespace(str[i]) == 1)
 		++i;
-	}
+	if (str[i] == 0)
+		return (1);
 	return (0);
 }
 
-int	is_close(char *input, char c)
+int	is_all_num(char *str)
+{
+	int	i;
+
+	if (str == NULL)
+		return (0);
+	i = 0;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (str[i] != '\0')
+	{
+		if (ft_isdigit(str[i]) == 0)
+			return (0);
+		++i;
+	}
+	return (1);
+}
+
+int	is_all_name_var(char *str)
 {
 	int	i;
 
 	i = 0;
-	while (input[i] && input[i] != c)
+	while (str[i] != 0 && str[i] != '=')
+	{
+		if (is_name_var(str[i]) == 0)
+			return (1);
 		++i;
-	if (input[i] == c)
-		return (1);
+	}
 	return (0);
 }

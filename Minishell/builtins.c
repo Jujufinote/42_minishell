@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:41:32 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/21 16:29:29 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/24 17:57:26 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,22 @@ int	cd(t_data *data, t_token *token, char *home)
 	char	*path;
 	int		res;
 
-	if (token != NULL && too_many_arg(token, token->before->post_str) == 1)
+	if (token != NULL && too_many_arg(token, "cd") == 1)
 		return (1);
-	res = cd_shortcuts(data, token, home);
-	if (res == 1)
-		return (1);
-	else if (res == 0)
+	while (token != NULL && ft_strncmp(token->str, "|", 2) != 0)
 	{
-		path = ft_strdup(token->str);
-		if (chdir(path) != 0)
-			return (free(path), perror("cd "), 1);
-		free(path);
+		if (is_redirection(token->str) == 1)
+			token->next->next;
+		res = cd_shortcuts(data, token, home);
+		if (res == 1)
+			return (1);
+		else if (res == 0)
+		{
+			path = ft_strdup(token->str);
+			if (chdir(path) != 0)
+				return (free(path), perror("cd "), 1);
+			free(path);
+		}
 	}
 	if (update_pwd(data) == 1)
 		return (1);
@@ -72,6 +77,8 @@ int	cd_shortcuts(t_data *data, t_token *token, char *home)
 {
 	char	*path;
 
+	if (token != NULL && is_redirection(token->str) == 1)
+		return (2);
 	if (token == NULL || token->file != 1 \
 	|| ft_strncmp(token->post_str, "$HOME", 6) == 0)
 	{
@@ -101,19 +108,26 @@ int	ft_exit(t_data *data, t_token *token)
 
 	if (data->pipe->nb_pipe == 0)
 		ft_putstr_fd("exit\n", data->files->saved_out);
-	rl_clear_history();
-	status = EXIT_SUCCESS;
-	if (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0 \
-	&& is_all_num(token->str) == 1)
-		status = ft_atoi(token->str);
-	if (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0 \
-	&& is_all_num(token->str) == 0)
+	status = data->last_exit_status;
+	while (token != NULL && ft_strncmp(token->str, "|", 2) != 0)
 	{
-		status = 2;
-		ft_putstr_fd("exit : numeric argument required\n", 2);
+		if (is_redirection(token->str) == 1)
+			token = token->next->next;
+		else if (is_all_num(token->str) == 1)
+		{
+			status = ft_atoi(token->str);
+			break ;
+		}
+		else if (is_all_num(token->str) == 0)
+		{
+			status = 2;
+			ft_putstr_fd("exit : numeric argument required\n", 2);
+			break ;
+		}
 	}
-	else if (token != NULL && too_many_arg(token, token->before->str) == 1)
+	if (token != NULL && is_all_num(token->str) == 1 && too_many_arg(token, "exit") == 1)
 		return (1);
+	rl_clear_history();
 	free_data(data);
 	exit(status);
 }
