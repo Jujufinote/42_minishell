@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:47:15 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/24 18:43:52 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:56:04 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	export(t_data *data, t_token *token)
 	exit_status = 0;
 	if (token == NULL || (token->op == 1 && token->str[0] == '|'))
 		exit_status = printf_sorted(data);
-	while (token != NULL && ft_strncmp(token->str, "|", 2) != 0)
+	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
 	{
 		if (is_redirection(token->str) == 1)
 			token = token->next->next;
@@ -43,7 +43,7 @@ int	unset(t_data *data, t_token *token)
 	int		i;
 	char	*var;
 
-	while (token != NULL && ft_strncmp(token->str, "|", 2) != 0)
+	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
 	{
 		if (is_redirection(token->str) == 1)
 			token = token->next->next;
@@ -77,7 +77,7 @@ int	unset(t_data *data, t_token *token)
 
 int	env(char **env, t_token *token)
 {
-	while (token != NULL && ft_strncmp(token->str, "|", 2) != 0)
+	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
 	{
 		if (is_redirection(token->str) == 1)
 			token = token->next->next;

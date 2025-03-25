@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 22:55:53 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/21 15:58:23 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:56:13 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	too_many_arg(t_token *token, char *cmd)
 		if (is_redirection(token->post_str) == 1)
 			token = token->next;
 		temp = token->next;
-		while (temp != NULL && ft_strncmp(temp->str, "|", 2) != 0)
+		while (temp != NULL && ft_strncmp(temp->post_str, "|", 2) != 0)
 		{
 			if (is_redirection(temp->str) == 1)
 				temp = temp->next;

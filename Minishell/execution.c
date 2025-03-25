@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 15:45:12 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/25 14:04:58 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/25 18:35:11 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	simple_exec(t_data *data, t_token *token)
 			ft_execute(data, build_command_tab(token));
 	}
 	ft_wait(data, -2);
-	if (data->last_exit_status != 1)
+	if (result != NULL)
 		exec_builtin_base(data, token);
 	return ;
 }

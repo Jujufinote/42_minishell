@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:41:32 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/25 15:27:04 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/25 18:15:17 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,22 @@ int	ft_echo(t_token *token)
 	int	nline;
 
 	nline = 1;
-	while (token != NULL && is_valid_opt_echo(token->str) == 1)
+	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
 	{
-		nline = 0;
-		token = token->next;
-	}
-	while (token != NULL && token->op == 0)
-	{
-		printf("%s", token->str);
-		if (token->next != NULL && token->next->file == 1)
-			printf(" ");
-		token = token->next;
+		while (token != NULL && is_redirection(token->str) == 1)
+			token = token->next->next;
+		while (token != NULL && is_valid_opt_echo(token->str) == 1)
+		{
+			nline = 0;
+			token = token->next;
+		}
+		while (token != NULL && token->op == 0)
+		{
+			printf("%s", token->str);
+			if (token->next != NULL && token->next->file == 1)
+				printf(" ");
+			token = token->next;
+		}
 	}
 	if (nline == 1)
 		printf("\n");
@@ -53,7 +58,7 @@ int	cd(t_data *data, t_token *token, char *home)
 
 	if (token != NULL && too_many_arg(token, "cd") == 1)
 		return (1);
-	while (token == NULL || (token != NULL && ft_strncmp(token->str, "|", 2) != 0))
+	while (token == NULL || (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0))
 	{
 		if (token != NULL && is_redirection(token->str) == 1)
 			token = token->next->next;
@@ -94,8 +99,7 @@ int	cd_shortcuts(t_data *data, t_token *token, char *home)
 		path = ft_getenv("OLDPWD", data);
 		if (path == NULL)
 			return (ft_putstr_fd("cd : <<OLDPWD>> not set\n", 2), 1);
-		ft_putstr_fd(path, data->files->saved_out);
-		ft_putstr_fd("\n", data->files->saved_out);
+		printf("%s\n", path);
 		if (chdir(path) != 0)
 			return (perror("cd "), 1);
 		return (2);
@@ -110,7 +114,7 @@ int	ft_exit(t_data *data, t_token *token)
 	if (data->pipe->nb_pipe == 0)
 		ft_putstr_fd("exit\n", data->files->saved_out);
 	status = data->last_exit_status;
-	while (token != NULL && ft_strncmp(token->str, "|", 2) != 0)
+	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
 	{
 		if (is_redirection(token->str) == 1)
 			token = token->next->next;

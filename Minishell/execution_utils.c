@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 22:54:56 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/17 16:04:08 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:35:53 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_execute(t_data *data, char **cmdoption)
 	if (cmdoption[0] == NULL)
 	{
 		free_data(data);
+		free_dtab(cmdoption);
 		exit(EXIT_SUCCESS);
 	}
 	path = ft_access(data->env, cmdoption[0]);
