@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:55:48 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/25 14:15:50 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:21:17 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,21 @@ void	signal_handler(int info)
 	sig = 1;
 	while (sig < _NSIG)
 	{
-		if (sig != SIGINT)
+		if (sig != SIGINT && sig != SIGKILL && sig != SIGSTOP && sig != SIGCHLD && sig != SIGQUIT)
 			signal(sig, SIG_IGN);
+		if (sig == SIGCHLD)
+			signal(sig, SIG_DFL);
 		++sig;
 	}
 	if (info == 1)
+	{
+		signal(SIGQUIT, SIG_DFL);
 		signal(SIGINT, handler);
+	}
 	else
+	{
+		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, handler_interractive);
+	}
 	return ;
 }

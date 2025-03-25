@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:41:32 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/24 18:17:50 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:27:04 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ int	cd(t_data *data, t_token *token, char *home)
 
 	if (token != NULL && too_many_arg(token, "cd") == 1)
 		return (1);
-	while (token != NULL && ft_strncmp(token->str, "|", 2) != 0)
+	while (token == NULL || (token != NULL && ft_strncmp(token->str, "|", 2) != 0))
 	{
-		if (is_redirection(token->str) == 1)
+		if (token != NULL && is_redirection(token->str) == 1)
 			token = token->next->next;
 		res = cd_shortcuts(data, token, home);
 		if (res == 1)
@@ -66,11 +66,12 @@ int	cd(t_data *data, t_token *token, char *home)
 			if (chdir(path) != 0)
 				return (free(path), perror("cd "), 1);
 			free(path);
+			break ;
 		}
+		else if (res == 2)
+			break ;
 	}
-	if (update_pwd(data) == 1)
-		return (1);
-	return (0);
+	return (update_pwd(data));
 }
 
 int	cd_shortcuts(t_data *data, t_token *token, char *home)
@@ -78,7 +79,7 @@ int	cd_shortcuts(t_data *data, t_token *token, char *home)
 	char	*path;
 
 	if (token != NULL && is_redirection(token->str) == 1)
-		return (2);
+		return (3);
 	if (token == NULL || token->file != 1 \
 	|| ft_strncmp(token->post_str, "$HOME", 6) == 0)
 	{
