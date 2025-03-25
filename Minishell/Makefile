@@ -9,6 +9,7 @@ INCLUDE = -I./Libft
 NAME = minishell
 
 SRC = ./minishell.c \
+		./signals.c \
 		./env.c \
 		./paths.c \
 		./parsing.c \

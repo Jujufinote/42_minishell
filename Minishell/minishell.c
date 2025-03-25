@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:08:52 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/13 13:43:57 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/25 14:03:39 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,29 +32,6 @@ void	prompt(t_data *data)
 	}
 }
 
-void	handler_interractive(int sig)
-{
-	if (sig == SIGINT)
-	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-	return ;
-}
-
-void	handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-	}
-	return ;
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
@@ -76,8 +53,7 @@ int	main(int argc, char **argv, char **envp)
 	free(value);
 	modif_env(data, str);
 	free(str);
-	signal(SIGINT, handler_interractive);
-	signal(SIGQUIT, SIG_IGN);
+	signal_handler(0);
 	prompt(data);
 	rl_clear_history();
 	free_data(data);

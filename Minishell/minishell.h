@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:22:55 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/24 18:08:12 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/25 14:04:01 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,12 @@ typedef struct s_token
 
 /*minishell.c*/
 void	prompt(t_data *data);
+int		main(int argc, char **argv, char **envp);
+
+/*signals.c*/
 void	handler_interractive(int sig);
 void	handler(int sig);
-int		main(int argc, char **argv, char **envp);
+void	signal_handler(int info);
 
 /*env.c*/
 char	**create_env(char **envp);

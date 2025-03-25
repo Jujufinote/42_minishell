@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 15:45:12 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/24 14:59:06 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/25 14:04:58 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	execution(t_data *data)
 {
 	t_token	*token;
 
-*	signal(SIGINT, handler);
+	signal_handler(1);
 	token = *data->tokens;
 	data->pipe->nb_pipe = count_pipe(token);
 	if (prep_hd(data) == 1)
