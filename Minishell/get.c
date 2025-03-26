@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:05:54 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/23 15:16:54 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/26 15:45:44 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ char	*get_last_exit_status(int num)
 	static char	les[4];
 	int			i;
 
+	ft_bzero(les, 4);
 	if (num == 0)
 		i = 1;
 	else

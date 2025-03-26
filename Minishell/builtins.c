@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:41:32 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/25 18:15:17 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:02:57 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,26 @@ int	ft_echo(t_token *token)
 	int	nline;
 
 	nline = 1;
-	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
+	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0 && is_redirection(token->str) == 1)
+		token = token->next->next;
+	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0 && is_valid_opt_echo(token->str) == 1)
 	{
-		while (token != NULL && is_redirection(token->str) == 1)
-			token = token->next->next;
-		while (token != NULL && is_valid_opt_echo(token->str) == 1)
-		{
-			nline = 0;
+		if (is_redirection(token->str) == 1)
 			token = token->next;
-		}
-		while (token != NULL && token->op == 0)
+		nline = 0;
+		token = token->next;
+	}
+	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0 && token->op == 0)
+	{
+		while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0 && is_redirection(token->str) == 1)
+			token = token->next->next;
+		if (token != NULL && token->str != NULL)
 		{
 			printf("%s", token->str);
 			if (token->next != NULL && token->next->file == 1)
 				printf(" ");
-			token = token->next;
 		}
+		token = token->next;
 	}
 	if (nline == 1)
 		printf("\n");
