@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:47:15 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/25 17:56:04 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:57:01 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	export(t_data *data, t_token *token)
 	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
 	{
 		if (is_redirection(token->str) == 1)
-			token = token->next->next;
-		if (is_all_name_var(token->str) == 1)
+			token = token->next;
+		else if (is_all_name_var(token->str) == 1)
 		{
 			ft_putstr_fd("export : << ", 2);
 			ft_putstr_fd(token->str, 2);
@@ -45,7 +45,7 @@ int	unset(t_data *data, t_token *token)
 
 	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
 	{
-		if (is_redirection(token->str) == 1)
+		while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0 && is_redirection(token->str) == 1)
 			token = token->next->next;
 		i = 0;
 		var = ft_strjoin(token->str, "=");
