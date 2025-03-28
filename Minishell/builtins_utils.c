@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 22:55:53 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/25 17:56:13 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/28 14:57:07 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,23 +74,29 @@ int	is_builtin(char *str)
 
 int	too_many_arg(t_token *token, char *cmd)
 {
-	t_token	*temp;
-
 	if (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
 	{
-		if (is_redirection(token->post_str) == 1)
-			token = token->next;
-		temp = token->next;
-		while (temp != NULL && ft_strncmp(temp->post_str, "|", 2) != 0)
+		while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
 		{
-			if (is_redirection(temp->str) == 1)
-				temp = temp->next;
-			else if (temp->file == 1)
+			if (is_redirection(token->str) == 1)
+				token = token->next;
+			else if (token->file == 1)
+			{
+				token = token->next;
+				break ;
+			}
+			token = token->next;
+		}
+		while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
+		{
+			if (is_redirection(token->str) == 1)
+				token = token->next;
+			else if (token->file == 1)
 			{
 				ft_putstr_fd(cmd, 2);
 				return (ft_putstr_fd(" : too many arguments\n", 2), 1);
 			}
-			temp = temp->next;
+			token = token->next;
 		}
 	}
 	return (0);

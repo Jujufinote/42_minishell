@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 15:19:47 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/28 13:41:31 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/28 15:10:26 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	is_all_name_var(char *str)
 	int	i;
 
 	i = 0;
-	if (ft_isdigit(str[i]) == 1 || str[i] == '_')
+	if (ft_isdigit(str[i]) == 1 || str[i] == '=')
 		return (1);
 	while (str[i] != 0 && str[i] != '=')
 	{

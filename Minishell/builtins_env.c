@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:47:15 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/26 16:57:01 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/28 14:37:16 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,30 +45,33 @@ int	unset(t_data *data, t_token *token)
 
 	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
 	{
-		while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0 && is_redirection(token->str) == 1)
-			token = token->next->next;
-		i = 0;
-		var = ft_strjoin(token->str, "=");
-		while (data->env[i] != NULL)
+		if (token != NULL && is_redirection(token->str) == 1)
+			token = token->next;
+		else
 		{
-			if (ft_strnstr(data->env[i], var, ft_strlen(var)) != NULL)
+			i = 0;
+			var = ft_strjoin(token->str, "=");
+			while (data->env[i] != NULL)
 			{
-				if (supp_env(data, var, 0, 0) == 1)
-					return (1);
-				else
-					break ;
-			}
-			else if (ft_strnstr(data->env[i], token->str, ft_strlen(token->str)) != NULL)
-			{
-				if (supp_env(data, ft_strdup(token->str), 0, 0) == 1)
-					return (free(var), 1);
-				else
+				if (ft_strnstr(data->env[i], var, ft_strlen(var)) != NULL)
 				{
-					free(var);
-					break ;
+					if (supp_env(data, var, 0, 0) == 1)
+						return (1);
+					else
+						break ;
 				}
+				else if (ft_strnstr(data->env[i], token->str, ft_strlen(token->str)) != NULL)
+				{
+					if (supp_env(data, ft_strdup(token->str), 0, 0) == 1)
+						return (free(var), 1);
+					else
+					{
+						free(var);
+						break ;
+					}
+				}
+				++i;
 			}
-			++i;
 		}
 		token = token->next;
 	}
