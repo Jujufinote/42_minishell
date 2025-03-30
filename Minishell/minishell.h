@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:22:55 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/25 14:04:01 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/30 10:53:53 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,7 @@ int		is_valid_opt_echo(char *str);
 int		update_pwd(t_data *data);
 int		is_builtin(char *str);
 int		too_many_arg(t_token *token, char *cmd);
+int		find_next_arg(t_token  *token);
 
 /*get.c*/
 char	*getname(char *str);

@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:41:32 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/28 14:47:22 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/30 11:02:15 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ int	ft_echo(t_token *token)
 	}
 	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
 	{
-		if (token != NULL && is_redirection(token->str) == 1)
+		if (is_redirection(token->str) == 1)
 			token = token->next;
 		else if (token != NULL)
 		{
 			printf("%s", token->str);
-			if (token->next != NULL && token->next->file == 1) //TODO : faire fonction trouver arg suivant condition
+			if (find_next_arg(token->next) == 1)
 				printf(" ");
 		}
 		token = token->next;

@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:47:15 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/28 14:37:16 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/30 10:32:16 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 int	export(t_data *data, t_token *token)
 {
 	int		exit_status;
+	int		err;
 
 	exit_status = 0;
+	err = 0;
 	if (token == NULL || (token->op == 1 && token->str[0] == '|'))
 		exit_status = printf_sorted(data);
 	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
@@ -28,6 +30,7 @@ int	export(t_data *data, t_token *token)
 			ft_putstr_fd("export : << ", 2);
 			ft_putstr_fd(token->str, 2);
 			ft_putstr_fd(" >> : not a valid identifier\n", 2);
+			err =1;
 		}
 		else if (ft_strchr(token->str, '=') != NULL && is_env(data->env, token->str) == 0)
 			exit_status = modif_env(data, token->str);
@@ -35,6 +38,8 @@ int	export(t_data *data, t_token *token)
 			exit_status = add_env(data, token->str);
 		token = token->next;
 	}
+	if (err == 1)
+		return (1);
 	return (exit_status);
 }
 

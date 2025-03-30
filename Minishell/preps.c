@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:43:03 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/25 17:30:33 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/30 11:09:12 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	prep_exec(t_data *data, char *input)
 		else if (checking(*data->tokens) != 1)
 			execution(data);
 	}
+	else if (is_all_wp(input) == 1)
+		data->last_exit_status = 0;
 	else
 		data->last_exit_status = 1;
 	return ;

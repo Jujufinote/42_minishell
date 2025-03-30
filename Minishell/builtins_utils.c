@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 22:55:53 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/28 14:57:07 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/30 10:56:29 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,19 @@ int	too_many_arg(t_token *token, char *cmd)
 			}
 			token = token->next;
 		}
+	}
+	return (0);
+}
+
+int	find_next_arg(t_token  *token)
+{
+	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
+	{
+		if (is_redirection(token->str) == 1)
+			token = token->next;
+		else if (token->file == 1)
+			return (1);
+		token = token->next;
 	}
 	return (0);
 }
