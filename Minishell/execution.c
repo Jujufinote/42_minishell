@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 15:45:12 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/31 14:45:14 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/31 18:50:52 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	exec_pipe(t_data *data, t_token *token, char *result, int i)
 		while (token != NULL && ft_strncmp(token->before->post_str, "|", 2) != 0)
 			token = token->next;
 	}
-	ft_wait(data, -1);
 	close_all(data->pipe->pipefd, data->pipe->nb_pipe);
+	ft_wait(data, -1);
 	free_pipe(data);
 }
 

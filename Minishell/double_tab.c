@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:01:19 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/28 13:47:40 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/31 18:35:37 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	find_len(t_token *token)
 	{
 		if (is_redirection(token->str) == 1)
 			token = token->next->next;
-		else if (token != NULL && is_operator(token->str) == 0)
+		else if (token != NULL && token->file == 1)
 		{
 			++len;
 			token = token->next;
@@ -45,7 +45,7 @@ char	**build_command_tab(t_token *token)
 	{
 		if (is_redirection(token->str) == 1)
 			token = token->next->next;
-		if (token != NULL && is_operator(token->str) != 1)
+		if (token != NULL && token->file == 1)
 		{
 			table[i] = ft_strdup(token->str);
 			if (table[i] == NULL)
