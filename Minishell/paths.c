@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:40:46 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/24 16:57:01 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/31 14:24:19 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	**make_paths(char **envp)
 
 int	ft_is_file(char *path)
 {
-	struct stat st;
+	struct stat	st;
 
 	if (stat(path, &st) == 0)
 	{

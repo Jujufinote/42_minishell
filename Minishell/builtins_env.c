@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:47:15 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/30 10:32:16 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/31 14:19:53 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	export(t_data *data, t_token *token)
 			ft_putstr_fd("export : << ", 2);
 			ft_putstr_fd(token->str, 2);
 			ft_putstr_fd(" >> : not a valid identifier\n", 2);
-			err =1;
+			err = 1;
 		}
 		else if (ft_strchr(token->str, '=') != NULL && is_env(data->env, token->str) == 0)
 			exit_status = modif_env(data, token->str);

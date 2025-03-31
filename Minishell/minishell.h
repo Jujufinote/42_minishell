@@ -6,15 +6,12 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:22:55 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/30 10:53:53 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/03/31 14:43:08 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-# define BEFORE 0
-# define AFTER 1
 
 # define BASH "bash"
 
@@ -153,6 +150,7 @@ char	*double_quote(t_data *data, char *base, char *result, int is_ok);
 /*sorting_utils.c*/
 int		is_file(t_token *token);
 int		is_operator(char *str);
+int		is_operator_final(char *str);
 void	sorting(t_token *token);
 
 /*checking.c*/
@@ -205,7 +203,7 @@ int		is_valid_opt_echo(char *str);
 int		update_pwd(t_data *data);
 int		is_builtin(char *str);
 int		too_many_arg(t_token *token, char *cmd);
-int		find_next_arg(t_token  *token);
+int		find_next_arg(t_token *token);
 
 /*get.c*/
 char	*getname(char *str);
