@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 22:55:53 by jverdier          #+#    #+#             */
-/*   Updated: 2025/04/01 14:17:31 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/01 15:06:49 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ int	is_builtin(char *str)
 
 int	too_many_arg(t_token *token, char *cmd)
 {
-	if (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
+	if (token != NULL && ft_strncmp(token->base, "|", 2) != 0)
 	{
-		while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
+		while (token != NULL && ft_strncmp(token->base, "|", 2) != 0)
 		{
 			if (is_redirection(token) == 1)
 				token = token->next;
@@ -87,7 +87,7 @@ int	too_many_arg(t_token *token, char *cmd)
 			}
 			token = token->next;
 		}
-		while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
+		while (token != NULL && ft_strncmp(token->base, "|", 2) != 0)
 		{
 			if (is_redirection(token) == 1)
 				token = token->next;
@@ -104,7 +104,7 @@ int	too_many_arg(t_token *token, char *cmd)
 
 int	find_next_arg(t_token *token)
 {
-	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
+	while (token != NULL && ft_strncmp(token->base, "|", 2) != 0)
 	{
 		if (is_redirection(token) == 1)
 			token = token->next;

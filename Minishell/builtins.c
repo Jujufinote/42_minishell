@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:41:32 by jverdier          #+#    #+#             */
-/*   Updated: 2025/04/01 14:17:44 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/01 15:07:37 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ int	ft_echo(t_token *token)
 	int	nline;
 
 	nline = 1;
-	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0 && is_redirection(token) == 1)
+	while (token != NULL && ft_strncmp(token->base, "|", 2) != 0 && is_redirection(token) == 1)
 		token = token->next->next;
-	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0 && is_valid_opt_echo(token->str) == 1)
+	while (token != NULL && ft_strncmp(token->base, "|", 2) != 0 && is_valid_opt_echo(token->str) == 1)
 	{
 		if (is_redirection(token) == 1)
 			token = token->next;
 		nline = 0;
 		token = token->next;
 	}
-	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
+	while (token != NULL && ft_strncmp(token->base, "|", 2) != 0)
 	{
 		if (is_redirection(token) == 1)
 			token = token->next;
@@ -62,7 +62,7 @@ int	cd(t_data *data, t_token *token, char *home)
 
 	if (token != NULL && too_many_arg(token, "cd") == 1)
 		return (1);
-	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0 && is_redirection(token) == 1)
+	while (token != NULL && ft_strncmp(token->base, "|", 2) != 0 && is_redirection(token) == 1)
 		token = token->next->next;
 	res = cd_shortcuts(data, token, home);
 	if (res == 1)
@@ -110,7 +110,7 @@ int	ft_exit(t_data *data, t_token *token)
 	if (data->pipe->nb_pipe == 0)
 		ft_putstr_fd("exit\n", data->files->saved_out);
 	status = data->last_exit_status;
-	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
+	while (token != NULL && ft_strncmp(token->base, "|", 2) != 0)
 	{
 		if (is_redirection(token) == 1)
 			token = token->next->next;

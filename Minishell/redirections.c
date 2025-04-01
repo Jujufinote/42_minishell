@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 18:36:52 by jverdier          #+#    #+#             */
-/*   Updated: 2025/04/01 14:17:49 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/01 15:09:33 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	redirection(t_data *data, t_token *token, int i)
 		if (redir_base(data, i) == 1)
 			return (free_data(data), 1);
 	}
-	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
+	while (token != NULL && ft_strncmp(token->base, "|", 2) != 0)
 	{
 		if (is_redirection(token) == 1)
 		{

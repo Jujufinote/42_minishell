@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:08:35 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/20 18:38:05 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/01 15:10:13 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	count_pipe(t_token *token)
 	pipe = 0;
 	while (token != NULL)
 	{
-		if (token->op == 1 && ft_strncmp(token->post_str, "|", 2) == 0)
+		if (token->op == 1 && ft_strncmp(token->base, "|", 2) == 0)
 			++pipe;
 		token = token->next;
 	}

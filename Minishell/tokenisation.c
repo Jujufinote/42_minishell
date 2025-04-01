@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 15:12:24 by jverdier          #+#    #+#             */
-/*   Updated: 2025/04/01 15:04:03 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/01 15:09:51 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*formatting(t_data *data, char *base, t_token *token)
 		return (NULL);
 	if (token != NULL)
 	{
-		while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
+		while (token != NULL && ft_strncmp(token->base, "|", 2) != 0)
 		{
 			token->str = final_replacement(data, token->base, NULL);
 			if (token->str == NULL)

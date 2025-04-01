@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:01:19 by jverdier          #+#    #+#             */
-/*   Updated: 2025/04/01 14:17:47 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/01 15:08:34 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	find_len(t_token *token)
 	int	len;
 
 	len = 0;
-	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
+	while (token != NULL && ft_strncmp(token->base, "|", 2) != 0)
 	{
 		if (is_redirection(token) == 1)
 			token = token->next->next;
@@ -41,7 +41,7 @@ char	**build_command_tab(t_token *token)
 	if (table == NULL)
 		return (ft_putstr_fd("Error in memory allocation\n", 2), NULL);
 	i = 0;
-	while (i < length && token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
+	while (i < length && token != NULL && ft_strncmp(token->base, "|", 2) != 0)
 	{
 		if (is_redirection(token) == 1)
 			token = token->next->next;
