@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 22:55:53 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/31 18:28:05 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:17:31 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	too_many_arg(t_token *token, char *cmd)
 	{
 		while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
 		{
-			if (is_redirection(token->str) == 1)
+			if (is_redirection(token) == 1)
 				token = token->next;
 			else if (token->file == 1)
 			{
@@ -89,7 +89,7 @@ int	too_many_arg(t_token *token, char *cmd)
 		}
 		while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
 		{
-			if (is_redirection(token->str) == 1)
+			if (is_redirection(token) == 1)
 				token = token->next;
 			else if (token->file == 1)
 			{
@@ -106,7 +106,7 @@ int	find_next_arg(t_token *token)
 {
 	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
 	{
-		if (is_redirection(token->str) == 1)
+		if (is_redirection(token) == 1)
 			token = token->next;
 		else if (token->file == 1)
 			return (1);

@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 12:25:11 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/31 18:47:54 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:24:55 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,27 @@ int	is_operator(char *str)
 	return (0);
 }
 
-int	is_operator_final(char *str)
+int	is_operator_final(t_token *token)
 {
-	if (ft_strncmp(str, "|", 2) == 0)
-		return (1);
-	if (ft_strncmp(str, "<", 2) == 0)
-		return (1);
-	if (ft_strncmp(str, "<<", 3) == 0)
-		return (2);
-	if (ft_strncmp(str, ">", 2) == 0)
-		return (1);
-	if (ft_strncmp(str, ">>", 3) == 0)
-		return (2);
+	if (token->base[0] != '\'' && token->base[0] != '\"')
+	{
+		if (ft_strncmp(token->post_str, "|", 2) == 0)
+			return (1);
+		if (ft_strncmp(token->post_str, "<", 2) == 0)
+			return (1);
+		if (ft_strncmp(token->post_str, "<<", 3) == 0)
+			return (2);
+		if (ft_strncmp(token->post_str, ">", 2) == 0)
+			return (1);
+		if (ft_strncmp(token->post_str, ">>", 3) == 0)
+			return (2);
+	}
 	return (0);
 }
 
 int	is_file(t_token *token)
 {
-	if (is_operator_final(token->post_str) == 0)
+	if (is_operator_final(token) == 0)
 		return (1);
 	return (0);
 }
@@ -59,7 +62,7 @@ void	sorting(t_token *token)
 {
 	while (token != NULL)
 	{
-		token->op = is_operator_final(token->post_str);
+		token->op = is_operator_final(token);
 		token->file = is_file(token);
 		token = token->next;
 	}

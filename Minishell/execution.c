@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 15:45:12 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/31 18:50:52 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:57:52 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	simple_exec(t_data *data, t_token *token)
 	char	*result;
 
 	result = formatting(data, NULL, token);
+	printlst(data->tokens);
 	data->pid1 = fork();
 	if (data->pid1 == 0)
 	{

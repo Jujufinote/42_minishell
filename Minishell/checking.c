@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:04:19 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/20 17:35:39 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:18:42 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	is_double(t_token *token)
 	if (token->op > 0)
 	{
 		if (token->next != NULL && token->next->op > 0 \
-		&& (is_redirection(token->next->post_str) != 1 && token->post_str[0] == '|'))
+		&& (is_redirection(token->next) != 1 && token->post_str[0] == '|'))
 			return (syntax_error(token), 1);
 	}
 	return (0);
@@ -40,7 +40,7 @@ int	is_double(t_token *token)
 
 int	is_red_ok(t_token *token)
 {
-	if (is_redirection(token->post_str) == 1)
+	if (is_redirection(token) == 1)
 	{
 		if (token->next == NULL || token->next->file != 1)
 			return (syntax_error(token), 1);

@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:22:55 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/31 14:43:08 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:25:31 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int		is_close(char *input, char c);
 /*characters.c*/
 int		is_name_var(char c);
 int		is_whitespace(char c);
-int		is_redirection(char *str);
+int		is_redirection(t_token *token);
 int		is_pairs(char c);
 
 /*is_all.c*/
@@ -150,7 +150,7 @@ char	*double_quote(t_data *data, char *base, char *result, int is_ok);
 /*sorting_utils.c*/
 int		is_file(t_token *token);
 int		is_operator(char *str);
-int		is_operator_final(char *str);
+int		is_operator_final(t_token *token);
 void	sorting(t_token *token);
 
 /*checking.c*/

@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:47:15 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/31 14:19:53 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:17:24 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	export(t_data *data, t_token *token)
 		exit_status = printf_sorted(data);
 	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
 	{
-		if (is_redirection(token->str) == 1)
+		if (is_redirection(token) == 1)
 			token = token->next;
 		else if (is_all_name_var(token->str) == 1)
 		{
@@ -50,7 +50,7 @@ int	unset(t_data *data, t_token *token)
 
 	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
 	{
-		if (token != NULL && is_redirection(token->str) == 1)
+		if (token != NULL && is_redirection(token) == 1)
 			token = token->next;
 		else
 		{
@@ -87,7 +87,7 @@ int	env(char **env, t_token *token)
 {
 	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
 	{
-		if (is_redirection(token->str) == 1)
+		if (is_redirection(token) == 1)
 			token = token->next->next;
 		else if (token != NULL && token->file == 1)
 			return (ft_putstr_fd("env : too many arguments\n", 2), 1);

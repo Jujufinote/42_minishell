@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 11:39:01 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/21 14:23:10 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:17:48 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	next_hd(t_data *data, t_token *token)
 {
 	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
 	{
-		if (is_redirection(token->str) == 1)
+		if (is_redirection(token) == 1)
 		{
 			token = token->next;
 			if (token->before->str[0] == '<' && token->before->op == 2)

@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 18:36:52 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/31 18:52:04 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:17:49 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	redirection(t_data *data, t_token *token, int i)
 	}
 	while (token != NULL && ft_strncmp(token->post_str, "|", 2) != 0)
 	{
-		if (is_redirection(token->str) == 1)
+		if (is_redirection(token) == 1)
 		{
 			token = token->next;
 			if (redir_in(data, token, i) == 1 \
