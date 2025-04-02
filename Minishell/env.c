@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:33:49 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/24 16:50:25 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/01 15:59:55 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,11 @@ int	supp_env(t_data *data, char *name, int i, int j)
 	return (free(name), 0);
 }
 
-int	modif_env(t_data *data, char *str)
+int	modif_env(t_data *data, char *str, int i)
 {
 	char	*nameenv;
 	char	*name;
-	int		i;
 
-	i = -1;
 	name = getname(str);
 	if (name == NULL)
 		return (ft_putstr_fd("Error in memory allocation\n", 2), 1);
@@ -111,9 +109,11 @@ int	modif_env(t_data *data, char *str)
 		{
 			free(data->env[i]);
 			data->env[i] = ft_strdup(str);
+			free(nameenv);
+			free(name);
 			if (data->env[i] == NULL)
-				return (free(name), free(nameenv), ft_putstr_fd("Error in memory allocation\n", 2), 1);
-			return (free(name), free(nameenv), 0);
+				return (ft_putstr_fd("Error in memory allocation\n", 2), 1);
+			return (0);
 		}
 	}
 	return (free(name), free(nameenv), 0);

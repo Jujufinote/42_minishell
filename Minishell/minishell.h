@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:22:55 by jverdier          #+#    #+#             */
-/*   Updated: 2025/04/01 14:25:31 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:19:52 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 
 typedef struct s_data
 {
-	int				last_exit_status;
+	int				last_exit;
 	char			**env;
 	int				pid1;
 	pid_t			*pid;
@@ -111,14 +111,14 @@ void	signal_handler(int info);
 char	**create_env(char **envp);
 int		add_env(t_data *data, char *var);
 int		supp_env(t_data *data, char *var, int i, int j);
-int		modif_env(t_data *data, char *str);
+int		modif_env(t_data *data, char *str, int i);
 int		is_env(char **env, char *str);
 
 /*paths.c*/
 char	**make_paths(char **envp);
 int		ft_is_file(char *path);
 char	*ft_access(char **paths, char *cmd);
-char	*verif_path(char **paths, char *cmd);
+char	*verif_path(char **paths, char *cmd, int i);
 
 /*parsing.c*/
 int		parsing(char *input);
@@ -136,13 +136,12 @@ int		is_all_num(char *str);
 int		is_all_name_var(char *str);
 
 /*tokenisation.c*/
-char	*howsub(char *s, int i);
 char	*formatting(t_data *data, char *base, t_token *token);
 t_token	**tokenisation(t_data *data, char *str);
+char	*replacement(t_data *data, char *base, char *result);
 t_token	**create_list(t_data *data, t_token **p_token, char *str, int i);
 
 /*concatenation.c*/
-char	*replacement(t_data *data, char *base, char *result);
 char	*final_replacement(t_data *data, char *base, char *result);
 char	*single_quote(char *base, char *result);
 char	*double_quote(t_data *data, char *base, char *result, int is_ok);
@@ -158,6 +157,7 @@ int		checking(t_token *token);
 int		is_double(t_token *token);
 int		is_red_ok(t_token *token);
 int		is_pipe_ok(t_token *token);
+void	syntax_error(t_token *token);
 
 /*execution.c*/
 void	execution(t_data *data);
@@ -168,7 +168,10 @@ void	exec_builtin_base(t_data *data, t_token *token);
 
 /*execution_utils.c*/
 void	ft_execute(t_data *data, char **cmdoption);
+void	is_ok(t_data *data, char **cmdoption);
 void	ft_wait(t_data *data, int i);
+void	what_exit(t_data *data, int exit_status);
+int		is_builtin(char *str);
 
 /*here_doc.c*/
 void	fill_hd(int **hdfd, int i, char *delimiter);
@@ -189,20 +192,19 @@ int		ft_echo(t_token *token);
 int		pwd(void);
 int		cd(t_data *data, t_token *token, char *home);
 int		cd_shortcuts(t_data *data, t_token *token, char *home);
-int		ft_exit(t_data *data, t_token *token);
+int		ft_exit(t_data *data, t_token *token, int status);
 
 /*builtins_env.c*/
-int		export(t_data *data, t_token *token);
+int		export(t_data *data, t_token *token, int exit_status, int err);
 int		unset(t_data *data, t_token *token);
 int		env(char **env, t_token *token);
-int		printf_sorted(t_data *data);
-void	print_tab(char **table);
+int		search_supp(t_data *data, t_token *token, char *var, int i);
 
 /*builtins_utils.c*/
 int		is_valid_opt_echo(char *str);
 int		update_pwd(t_data *data);
-int		is_builtin(char *str);
 int		too_many_arg(t_token *token, char *cmd);
+t_token	*pass_arg(t_token *token);
 int		find_next_arg(t_token *token);
 
 /*get.c*/
@@ -216,20 +218,25 @@ t_token	*lstnew(char *base, char *str);
 void	lstadd_back(t_token	**token, t_token *new);
 t_token	*lstlast(t_token *token);
 void	lstdel(t_token **token);
-void	printlst(t_token **p_token);
 
 /*utils.c*/
 int		length(char const *s, char c);
 char	*strjoin(char *s1, char *s2, int len);
 int		count_pipe(t_token *token);
-void	syntax_error(t_token *token);
 int		count_hd(t_token *token);
+char	*howsub(char *s, int i);
 
 /*double_tab.c*/
 int		find_len(t_token *token);
 char	**build_command_tab(t_token *token);
 void	swap_pchar(char **p1, char **p2);
 void	bubble_sort_tab(char **sorted);
+
+/*print.c*/
+//void	printlst(t_token **p_token);
+int		print_sorted(t_data *data, char **sorted, int i);
+void	print_tab(char **table);
+void	print_token_echo(t_token *token);
 
 /*init.c*/
 int		init(t_data *data, char **envp);

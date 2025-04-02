@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:01:19 by jverdier          #+#    #+#             */
-/*   Updated: 2025/04/01 15:08:34 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/01 16:06:41 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,10 @@ int	find_len(t_token *token)
 	while (token != NULL && ft_strncmp(token->base, "|", 2) != 0)
 	{
 		if (is_redirection(token) == 1)
-			token = token->next->next;
-		else if (token != NULL && token->file == 1)
-		{
-			++len;
 			token = token->next;
-		}
+		else if (token != NULL && token->file == 1)
+			++len;
+		token = token->next;
 	}
 	return (len);
 }
@@ -44,15 +42,15 @@ char	**build_command_tab(t_token *token)
 	while (i < length && token != NULL && ft_strncmp(token->base, "|", 2) != 0)
 	{
 		if (is_redirection(token) == 1)
-			token = token->next->next;
-		if (token != NULL && token->file == 1)
+			token = token->next;
+		else if (token != NULL && token->file == 1)
 		{
 			table[i] = ft_strdup(token->str);
 			if (table[i] == NULL)
 				return (ft_putstr_fd("Error in memory allocation\n", 2), NULL);
 			++i;
-			token = token->next;
 		}
+		token = token->next;
 	}
 	table[i] = NULL;
 	return (table);
@@ -81,7 +79,8 @@ void	bubble_sort_tab(char **sorted)
 		temp = i;
 		while (sorted[j] != NULL)
 		{
-			if (ft_strncmp(sorted[temp], sorted[j], ft_strlen(sorted[temp]) + 1) > 0)
+			if (ft_strncmp(sorted[temp], sorted[j],
+					ft_strlen(sorted[temp]) + 1) > 0)
 				temp = j;
 			++j;
 		}

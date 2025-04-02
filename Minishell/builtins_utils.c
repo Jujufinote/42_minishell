@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 22:55:53 by jverdier          #+#    #+#             */
-/*   Updated: 2025/04/01 15:06:49 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/02 15:39:49 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	update_pwd(t_data *data)
 	old_pwd = ft_strjoin("OLDPWD=", ft_getenv("PWD", data));
 	if (old_pwd == NULL)
 		return (ft_putstr_fd("Error in memory allocation\n", 2), 1);
-	if (modif_env(data, old_pwd) == 1)
+	if (modif_env(data, old_pwd, -1) == 1)
 		return (free(old_pwd), 1);
 	free(old_pwd);
 	temp = getcwd(NULL, 0);
@@ -47,28 +47,9 @@ int	update_pwd(t_data *data)
 	if (pwd == NULL)
 		return (free(temp), ft_putstr_fd("Error in memory allocation\n", 2), 1);
 	free(temp);
-	if (modif_env(data, pwd) == 1)
+	if (modif_env(data, pwd, -1) == 1)
 		return (free(pwd), 1);
 	free(pwd);
-	return (0);
-}
-
-int	is_builtin(char *str)
-{
-	if (ft_strncmp(str, "echo", ft_strlen(str) + 1) == 0)
-		return (1);
-	if (ft_strncmp(str, "cd", ft_strlen(str) + 1) == 0)
-		return (1);
-	if (ft_strncmp(str, "pwd", ft_strlen(str) + 1) == 0)
-		return (1);
-	if (ft_strncmp(str, "export", ft_strlen(str) + 1) == 0)
-		return (1);
-	if (ft_strncmp(str, "unset", ft_strlen(str) + 1) == 0)
-		return (1);
-	if (ft_strncmp(str, "env", ft_strlen(str) + 1) == 0)
-		return (1);
-	if (ft_strncmp(str, "exit", ft_strlen(str) + 1) == 0)
-		return (1);
 	return (0);
 }
 
@@ -76,17 +57,7 @@ int	too_many_arg(t_token *token, char *cmd)
 {
 	if (token != NULL && ft_strncmp(token->base, "|", 2) != 0)
 	{
-		while (token != NULL && ft_strncmp(token->base, "|", 2) != 0)
-		{
-			if (is_redirection(token) == 1)
-				token = token->next;
-			else if (token->file == 1)
-			{
-				token = token->next;
-				break ;
-			}
-			token = token->next;
-		}
+		token = pass_arg(token);
 		while (token != NULL && ft_strncmp(token->base, "|", 2) != 0)
 		{
 			if (is_redirection(token) == 1)
@@ -100,6 +71,22 @@ int	too_many_arg(t_token *token, char *cmd)
 		}
 	}
 	return (0);
+}
+
+t_token	*pass_arg(t_token *token)
+{
+	while (token != NULL && ft_strncmp(token->base, "|", 2) != 0)
+	{
+		if (is_redirection(token) == 1)
+			token = token->next;
+		else if (token->file == 1)
+		{
+			token = token->next;
+			break ;
+		}
+		token = token->next;
+	}
+	return (token);
 }
 
 int	find_next_arg(t_token *token)

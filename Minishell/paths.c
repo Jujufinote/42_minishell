@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:40:46 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/31 14:24:19 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/01 15:51:43 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,16 @@ char	*ft_access(char **envp, char *cmd)
 		return (ft_putstr_fd(" : Permission denied\n", 2), NULL);
 	}
 	paths = make_paths(envp);
-	path = verif_path(paths, cmd);
+	path = verif_path(paths, cmd, -1);
 	free_dtab(paths);
 	return (path);
 }
 
-char	*verif_path(char **paths, char *cmd)
+char	*verif_path(char **paths, char *cmd, int i)
 {
-	int		i;
 	char	*path;
 	char	*path2;
 
-	i = -1;
 	while (paths != NULL && *cmd != '\0' && paths[++i] != NULL)
 	{
 		path = ft_strjoin(paths[i], "/");
@@ -91,7 +89,8 @@ char	*verif_path(char **paths, char *cmd)
 			if (access(path2, X_OK) == 0)
 				return (path2);
 			ft_putstr_fd(cmd, 2);
-			return (ft_putstr_fd(" : Permission denied\n", 2), free(path2), NULL);
+			free(path2);
+			return (ft_putstr_fd(" : Permission denied\n", 2), NULL);
 		}
 		free(path2);
 	}

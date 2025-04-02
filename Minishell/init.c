@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 13:46:30 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/23 15:14:33 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:06:56 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	init(t_data *data, char **envp)
 {
-	data->last_exit_status = 0;
+	data->last_exit = 0;
 	data->env = create_env(envp);
 	if (data->env == NULL)
 		return (ft_putstr_fd("Error in memory allocation\n", 2), 1);

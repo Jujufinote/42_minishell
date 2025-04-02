@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:08:35 by jverdier          #+#    #+#             */
-/*   Updated: 2025/04/01 15:10:13 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:00:23 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,6 @@ int	count_pipe(t_token *token)
 	return (pipe);
 }
 
-void	syntax_error(t_token *token)
-{
-	printf("Syntax error near unexpected token : ");
-	if (token->post_str[0] == '|' && token->op == 1)
-		printf("\'%s\'\n", token->post_str);
-	else if (token->next != NULL)
-		printf("\'%s\'\n", token->next->post_str);
-	else
-		printf("\'newline\'\n");
-	return ;
-}
-
 int	count_hd(t_token *token)
 {
 	int	hd;
@@ -89,4 +77,31 @@ int	count_hd(t_token *token)
 		token = token->next;
 	}
 	return (hd);
+}
+
+char	*howsub(char *s, int i)
+{
+	int	j;
+
+	j = i;
+	if (is_operator(&s[j]) > 0)
+	{
+		j += is_operator(&s[j]);
+		return (ft_substr(s, i, j - i));
+	}
+	while (is_whitespace(s[j]) != 1 && is_operator(&s[j]) == 0 && s[j] != '\0')
+	{
+		if (s[j] == '\'')
+		{
+			++j;
+			j += length(&s[j], '\'');
+		}
+		if (s[j] == '\"')
+		{
+			++j;
+			j += length(&s[j], '\"');
+		}
+		++j;
+	}
+	return (ft_substr(s, i, j - i));
 }

@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:43:03 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/31 14:37:19 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:07:00 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ void	prep_exec(t_data *data, char *input)
 		data->tokens = tokenisation(data, input);
 		if (data->tokens == NULL)
 		{
-			data->last_exit_status = 1;
+			data->last_exit = 1;
 			ft_putstr_fd("Error in memory allocation\n", 2);
 		}
 		else if (checking(*data->tokens) != 1)
 			execution(data);
 	}
 	else if (is_all_wp(input) == 1)
-		data->last_exit_status = 0;
+		data->last_exit = 0;
 	else
-		data->last_exit_status = 1;
+		data->last_exit = 1;
 	return ;
 }
 
@@ -64,7 +64,8 @@ int	prep_hd(t_data *data)
 		if (token->op == 2 && ft_strncmp(token->post_str, "<<", 3) == 0)
 		{
 			token = token->next;
-			fill_hd(data->hd->hdfd, i, final_replacement(data, token->post_str, NULL));
+			fill_hd(data->hd->hdfd, i,
+				final_replacement(data, token->post_str, NULL));
 			++i;
 		}
 		token = token->next;

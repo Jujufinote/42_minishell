@@ -30,6 +30,7 @@ SRC = ./minishell.c \
 		./lst_util.c \
 		./utils.c \
 		./double_tab.c \
+		./print.c \
 		./init.c \
 		./preps.c \
 		./mallocs.c \

@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 16:27:08 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/31 14:20:38 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/01 17:47:30 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,22 +82,5 @@ void	lstdel(t_token **lst)
 		free(before);
 	}
 	*lst = NULL;
-	return ;
-}
-
-void	printlst(t_token **p_token)
-{
-	t_token	*token;
-
-	if (p_token == NULL)
-		return ;
-	token = *p_token;
-	printf("\n");
-	while (token != NULL)
-	{
-		printf("before : %p\nnow : %p\nbase : %s\npost_str : %s\nstr : %s\nop = %d\nfile = %d\nnext : %p\nnow : %p\n\n", token->before, token, token->base,
-			token->post_str, token->str, token->op, token->file, token->next, token);
-		token = token->next;
-	}
 	return ;
 }

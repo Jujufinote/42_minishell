@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:04:19 by jverdier          #+#    #+#             */
-/*   Updated: 2025/04/01 14:18:42 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:59:40 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,16 @@ int	is_pipe_ok(t_token *token)
 	if (temp->op == 1 && temp->post_str[0] == '|')
 		return (syntax_error(temp), 1);
 	return (0);
+}
+
+void	syntax_error(t_token *token)
+{
+	printf("Syntax error near unexpected token : ");
+	if (token->post_str[0] == '|' && token->op == 1)
+		printf("\'%s\'\n", token->post_str);
+	else if (token->next != NULL)
+		printf("\'%s\'\n", token->next->post_str);
+	else
+		printf("\'newline\'\n");
+	return ;
 }

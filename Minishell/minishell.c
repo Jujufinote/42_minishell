@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:08:52 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/25 14:03:39 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/01 16:01:15 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int argc, char **argv, char **envp)
 	value = ft_itoa(shlvl);
 	str = ft_strjoin("SHLVL=", value);
 	free(value);
-	modif_env(data, str);
+	modif_env(data, str, 1);
 	free(str);
 	signal_handler(0);
 	prompt(data);

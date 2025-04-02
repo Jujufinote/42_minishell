@@ -6,39 +6,11 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 13:26:40 by jverdier          #+#    #+#             */
-/*   Updated: 2025/03/21 17:59:18 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:19:19 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*replacement(t_data *data, char *base, char *result)
-{
-	int	i;
-
-	i = 0;
-	while (base[i] != '\0')
-	{
-		if (base[i] == '\'')
-		{
-			result = single_quote(base + i + 1, result);
-			i += length(&base[i + 1], '\'') + 2;
-		}
-		else if (base[i] == '\"')
-		{
-			result = double_quote(data, base + i + 1, result, 0);
-			i += length(&base[i + 1], '\"') + 2;
-		}
-		else
-		{
-			result = strjoin(result, &base[i], 1);
-			++i;
-		}
-		if (result == NULL)
-			break ;
-	}
-	return (result);
-}
 
 char	*final_replacement(t_data *data, char *base, char *result)
 {
@@ -58,7 +30,8 @@ char	*final_replacement(t_data *data, char *base, char *result)
 			result = double_quote(data, base + i + 1, result, 1);
 			i += length(&base[i + 1], '\"') + 2;
 		}
-		else if (base[i] == '$' && (is_name_var(base[i + 1]) == 1 || base[i + 1] == '?'))
+		else if (base[i] == '$' \
+		&& (is_name_var(base[i + 1]) == 1 || base[i + 1] == '?'))
 		{
 			var = grab_var(base + i, data);
 			if (var == NULL)
@@ -103,7 +76,9 @@ char	*double_quote(t_data *data, char *base, char *result, int is_ok)
 	i = 0;
 	if (is_ok == 1)
 	{
-		while (base[i] != '\"' && base[i] != '\0' && (base[i] != '$' || (base[i] == '$' && is_name_var(base[i + 1]) == 0 && base[i + 1] != '?')))
+		while (base[i] != '\"' && base[i] != '\0' \
+		&& (base[i] != '$' || (base[i] == '$' && is_name_var(base[i + 1]) == 0 \
+		&& base[i + 1] != '?')))
 			++i;
 	}
 	else
@@ -114,7 +89,8 @@ char	*double_quote(t_data *data, char *base, char *result, int is_ok)
 	result = strjoin(result, base, i);
 	if (result == NULL)
 		return (NULL);
-	if (is_ok == 1 && base[i] == '$' && (is_name_var(base[i + 1]) == 1 || base[i + 1] == '?'))
+	if (is_ok == 1 && base[i] == '$' \
+	&& (is_name_var(base[i + 1]) == 1 || base[i + 1] == '?'))
 	{
 		var = grab_var(base + i, data);
 		if (var == NULL)

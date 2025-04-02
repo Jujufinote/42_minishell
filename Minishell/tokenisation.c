@@ -6,38 +6,11 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 15:12:24 by jverdier          #+#    #+#             */
-/*   Updated: 2025/04/01 15:09:51 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:19:42 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*howsub(char *s, int i)
-{
-	int	j;
-
-	j = i;
-	if (is_operator(&s[j]) > 0)
-	{
-		j += is_operator(&s[j]);
-		return (ft_substr(s, i, j - i));
-	}
-	while (is_whitespace(s[j]) != 1 && is_operator(&s[j]) == 0 && s[j] != '\0')
-	{
-		if (s[j] == '\'')
-		{
-			++j;
-			j += length(&s[j], '\'');
-		}
-		if (s[j] == '\"')
-		{
-			++j;
-			j += length(&s[j], '\"');
-		}
-		++j;
-	}
-	return (ft_substr(s, i, j - i));
-}
 
 char	*formatting(t_data *data, char *base, t_token *token)
 {
@@ -85,6 +58,34 @@ t_token	**tokenisation(t_data *data, char *str)
 		return (NULL);
 	sorting(*p_token);
 	return (p_token);
+}
+
+char	*replacement(t_data *data, char *base, char *result)
+{
+	int	i;
+
+	i = 0;
+	while (base[i] != '\0')
+	{
+		if (base[i] == '\'')
+		{
+			result = single_quote(base + i + 1, result);
+			i += length(&base[i + 1], '\'') + 2;
+		}
+		else if (base[i] == '\"')
+		{
+			result = double_quote(data, base + i + 1, result, 0);
+			i += length(&base[i + 1], '\"') + 2;
+		}
+		else
+		{
+			result = strjoin(result, &base[i], 1);
+			++i;
+		}
+		if (result == NULL)
+			break ;
+	}
+	return (result);
 }
 
 t_token	**create_list(t_data *data, t_token **p_token, char *str, int i)
