@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:22:55 by jverdier          #+#    #+#             */
-/*   Updated: 2025/04/02 17:19:52 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/02 18:38:53 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,14 +137,17 @@ int		is_all_name_var(char *str);
 
 /*tokenisation.c*/
 char	*formatting(t_data *data, char *base, t_token *token);
+char	*final_replacement(t_data *data, char *base, char *result);
 t_token	**tokenisation(t_data *data, char *str);
 char	*replacement(t_data *data, char *base, char *result);
 t_token	**create_list(t_data *data, t_token **p_token, char *str, int i);
 
 /*concatenation.c*/
-char	*final_replacement(t_data *data, char *base, char *result);
+char	*final_replacment_next(t_data *data, char *base, int *i, char *result);
 char	*single_quote(char *base, char *result);
 char	*double_quote(t_data *data, char *base, char *result, int is_ok);
+int		first_len(char *base, int is_ok);
+char	*replace_var(t_data *data, char *base, char *result, int i);
 
 /*sorting_utils.c*/
 int		is_file(t_token *token);

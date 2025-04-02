@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 15:12:24 by jverdier          #+#    #+#             */
-/*   Updated: 2025/04/02 17:19:42 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/02 18:41:40 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,31 @@ char	*formatting(t_data *data, char *base, t_token *token)
 	result = replacement(data, base, NULL);
 	if (result == NULL)
 		printf("Error in memory allocation\n");
+	return (result);
+}
+
+char	*final_replacement(t_data *data, char *base, char *result)
+{
+	int	i;
+
+	i = 0;
+	while (base[i] != '\0')
+	{
+		if (base[i] == '\'')
+		{
+			result = single_quote(base + i + 1, result);
+			i += length(&base[i + 1], '\'') + 2;
+		}
+		else if (base[i] == '\"')
+		{
+			result = double_quote(data, base + i + 1, result, 1);
+			i += length(&base[i + 1], '\"') + 2;
+		}
+		else
+			result = final_replacment_next(data, base, &i, result);
+		if (result == NULL)
+			break ;
+	}
 	return (result);
 }
 
