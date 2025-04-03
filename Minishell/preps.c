@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:43:03 by jverdier          #+#    #+#             */
-/*   Updated: 2025/04/02 16:07:00 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:14:58 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	prep_hd(t_data *data)
 		if (token->op == 2 && ft_strncmp(token->post_str, "<<", 3) == 0)
 		{
 			token = token->next;
-			fill_hd(data->hd->hdfd, i,
+			fill_hd(token, data->hd->hdfd, i,
 				final_replacement(data, token->post_str, NULL));
 			++i;
 		}

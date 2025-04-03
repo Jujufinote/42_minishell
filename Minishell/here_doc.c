@@ -6,26 +6,29 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 11:39:01 by jverdier          #+#    #+#             */
-/*   Updated: 2025/04/01 15:09:21 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:25:39 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	fill_hd(int **hdfd, int i, char *delimiter)
+void	fill_hd(t_token *token, int **hdfd, int i, char *delimiter)
 {
 	char	*line;
 
-	if (delimiter == NULL)
+	if (delimiter == NULL && ft_strncmp(token->post_str, "", 5) != 0)
 	{
 		ft_putstr_fd("Error in memory allocation\n", 2);
+		close(hdfd[i][1]);
 		return ;
 	}
 	while (1)
 	{
 		line = readline("> ");
 		if (line == NULL \
-		|| ft_strncmp(line, delimiter, ft_strlen(line) + 1) == 0)
+		|| ft_strncmp(line, delimiter, ft_strlen(line) + 1) == 0 \
+		|| (ft_strncmp(token->post_str, "", 5) == 0 \
+		&& ft_strncmp(line, "", 5) == 0))
 		{
 			free(line);
 			break ;
@@ -36,7 +39,6 @@ void	fill_hd(int **hdfd, int i, char *delimiter)
 	}
 	free(delimiter);
 	close(hdfd[i][1]);
-	return ;
 }
 
 int	redir_hd(t_data *data, t_token *token, int i)

@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:45:32 by jverdier          #+#    #+#             */
-/*   Updated: 2025/04/02 16:17:20 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:27:05 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,12 @@ void	print_token_echo(t_token *token)
 	printf("\n");
 	while (token != NULL)
 	{
-		printf("before : %p\nnow : %p\nbase : %s\npost_str : %s\nstr : 
-		%s\nop = %d
-		\nfile = %d\nnext : %p\nnow : %p\n\n", token->before, token, token->base,
+		printf("before : %p\nnow : %p\nbase : %s\npost_str : %s
+		\nstr : %s\nop = %d\nfile = %d\nnext : %p\nnow : %p\n\n", 
+		token->before, token, token->base,
 		token->post_str, token->str, token->op, token->file, token->next, token);
 		token = token->next;
 	}
 	return ;
-}*/
+}
+*/

@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:22:55 by jverdier          #+#    #+#             */
-/*   Updated: 2025/04/02 18:38:53 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:14:00 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ void	what_exit(t_data *data, int exit_status);
 int		is_builtin(char *str);
 
 /*here_doc.c*/
-void	fill_hd(int **hdfd, int i, char *delimiter);
+void	fill_hd(t_token *token, int **hdfd, int i, char *delimiter);
 int		redir_hd(t_data *data, t_token *token, int i);
 int		is_hd_alone(char *str);
 void	next_hd(t_data *data, t_token *token);
@@ -236,7 +236,7 @@ void	swap_pchar(char **p1, char **p2);
 void	bubble_sort_tab(char **sorted);
 
 /*print.c*/
-//void	printlst(t_token **p_token);
+void	printlst(t_token **p_token);
 int		print_sorted(t_data *data, char **sorted, int i);
 void	print_tab(char **table);
 void	print_token_echo(t_token *token);
