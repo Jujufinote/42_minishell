@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:22:55 by jverdier          #+#    #+#             */
-/*   Updated: 2025/04/03 14:14:00 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/05 15:28:42 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ int		main(int argc, char **argv, char **envp);
 /*signals.c*/
 void	handler_interractive(int sig);
 void	handler(int sig);
-void	signal_handler(int info);
+void	signal_handler(int info, int sig);
+void	is_interractive(struct sigaction sa, int info);
 
 /*env.c*/
 char	**create_env(char **envp);

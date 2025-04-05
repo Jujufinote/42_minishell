@@ -6,7 +6,7 @@
 /*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:08:52 by jverdier          #+#    #+#             */
-/*   Updated: 2025/04/01 16:01:15 by jverdier         ###   ########.fr       */
+/*   Updated: 2025/04/05 15:28:51 by jverdier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(int argc, char **argv, char **envp)
 	free(value);
 	modif_env(data, str, 1);
 	free(str);
-	signal_handler(0);
+	signal_handler(0, 1);
 	prompt(data);
 	rl_clear_history();
 	free_data(data);

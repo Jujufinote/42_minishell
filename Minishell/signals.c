@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jverdier <jverdier@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/25 13:55:48 by jverdier          #+#    #+#             */
-/*   Updated: 2025/04/01 15:31:41 by jverdier         ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   signals.c										  :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: jverdier <jverdier@student.42.fr>		  +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2025/03/25 13:55:48 by jverdier		  #+#	#+#			 */
+/*   Updated: 2025/04/05 15:32:47 by jverdier		 ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "minishell.h"
@@ -35,29 +35,57 @@ void	handler(int sig)
 	return ;
 }
 
-void	signal_handler(int info)
+void	signal_handler(int info, int sig)
 {
-	int	sig;
+	struct sigaction	sa;
 
-	sig = 1;
 	while (sig < _NSIG)
 	{
-		if (sig != SIGINT && sig != SIGKILL && sig != SIGSTOP \
-		&& sig != SIGCHLD && sig != SIGQUIT)
-			signal(sig, SIG_IGN);
-		if (sig == SIGCHLD)
-			signal(sig, SIG_DFL);
+		if (sig == SIGCHLD || sig == SIGPIPE)
+		{
+			sa.sa_handler = SIG_DFL;
+			sigemptyset(&sa.sa_mask);
+			sa.sa_flags = SA_RESTART;
+			sigaction(sig, &sa, NULL);
+		}
+		else if (sig != SIGINT && sig != SIGQUIT \
+		&& sig != SIGKILL && sig != SIGSTOP)
+		{
+			sa.sa_handler = SIG_IGN;
+			sigemptyset(&sa.sa_mask);
+			sa.sa_flags = SA_RESTART;
+			sigaction(sig, &sa, NULL);
+		}
 		++sig;
 	}
+	is_interractive(sa, info);
+}
+
+void	is_interractive(struct sigaction sa, int info)
+{
 	if (info == 1)
 	{
-		signal(SIGQUIT, SIG_DFL);
-		signal(SIGINT, handler);
+		sa.sa_handler = handler;
+		sigemptyset(&sa.sa_mask);
+		sa.sa_flags = SA_RESTART;
+		sigaction(SIGINT, &sa, NULL);
+	
+		sa.sa_handler = SIG_DFL;
+		sigemptyset(&sa.sa_mask);
+		sa.sa_flags = SA_RESTART;
+		sigaction(SIGQUIT, &sa, NULL);
 	}
 	else
 	{
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGINT, handler_interractive);
+		sa.sa_handler = handler_interractive;
+		sigemptyset(&sa.sa_mask);
+		sa.sa_flags = SA_RESTART;
+		sigaction(SIGINT, &sa, NULL);
+	
+		sa.sa_handler = SIG_IGN;
+		sigemptyset(&sa.sa_mask);
+		sa.sa_flags = SA_RESTART;
+		sigaction(SIGQUIT, &sa, NULL);
 	}
 	return ;
 }
